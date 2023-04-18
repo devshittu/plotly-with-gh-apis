@@ -29,5 +29,11 @@ for repo_dict in repo_dicts:
     print("\n\n")
 
 # Make visualizations.
-fig = px.bar(x=repo_names, y=stars, width=0,)
+
+title = "Most-Starred Python Projects on GitHub"
+
+lables = {'x': 'Repository', 'y': 'Stars'}
+
+fig = px.bar(x=repo_names, y=stars, title=title, labels=lables)
+fig.update_layout(title_font_size=28, xaxis_title_font_size=20, yaxis_title_font_size=20,)
 fig.show()
