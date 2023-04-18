@@ -1,4 +1,5 @@
 import requests
+import plotly.express as px
 
 url = "https://api.github.com/search/repositories"
 url += "?q=language:python+sort:stars+stars:>10000"
@@ -17,22 +18,16 @@ print(f"Complete results: {not response_dict['incomplete_results']}")
 repo_dicts = response_dict["items"]
 print(f"Repositories returned: {len(repo_dicts)}")
 
-# Examine the first repo
-repo_dict = repo_dicts[0]
-print(f"\nKeys: {len(repo_dict)}")
+repo_names, stars = [], []
 
 # To summarize the top repos in a file.
-index = 0
-print(f"\nFind the summary below")
-for repo_dict in repo_dicts[0:]:
-    index +=1
-    print(f"\nSelected information about {index} repository:")
-    print(f"Name: {repo_dict['name']}")
-    print(f"Owner: {repo_dict['owner']['login']}")
-    print(f"Stars: {repo_dict['stargazers_count']}")
-    print(f"Repository: {repo_dict['html_url']}")
-    print(f"Created: {repo_dict['created_at']}")
-    print(f"Updated: {repo_dict['updated_at']}")
-    print(f"Description: {repo_dict['description']}")
+print("\nFind the summary below")
+for repo_dict in repo_dicts:
+    print("\nSelected information about repository:")
+    repo_names.append(repo_dict["name"])
+    stars.append(repo_dict["stargazers_count"])
     print("\n\n")
 
+# Make visualizations.
+fig = px.bar(x=repo_names, y=stars, width=0,)
+fig.show()
