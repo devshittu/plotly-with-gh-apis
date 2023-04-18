@@ -18,11 +18,16 @@ print(f"Complete results: {not response_dict['incomplete_results']}")
 repo_dicts = response_dict["items"]
 print(f"Repositories returned: {len(repo_dicts)}")
 
-repo_names, stars, hover_texts = [], [], []
+repo_links, repo_names, stars, hover_texts = [], [], [], []
 
 # To summarize the top repos in a file.
 print("\nFind the summary below")
 for repo_dict in repo_dicts:
+    # Turn repo names in to active links.
+    repo_name = repo_dict["name"]
+    repo_url = repo_dict["html_url"]
+    repo_link = f"<a href='{repo_url}'>{repo_name}</a>"
+    repo_links.append(repo_url)
     repo_names.append(repo_dict["name"])
     stars.append(repo_dict["stargazers_count"])
     # Build hover texts
@@ -37,6 +42,6 @@ title = "Most-Starred Python Projects on GitHub"
 
 lables = {'x': 'Repository', 'y': 'Stars'}
 
-fig = px.bar(x=repo_names, y=stars, title=title, labels=lables, hover_name=hover_texts)
+fig = px.bar(x=repo_links, y=stars, title=title, labels=lables, hover_name=hover_texts)
 fig.update_layout(title_font_size=28, xaxis_title_font_size=20, yaxis_title_font_size=20,)
 fig.show()
