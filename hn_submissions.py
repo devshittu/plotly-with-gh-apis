@@ -35,7 +35,10 @@ for submission_dict in submission_dicts:
 response_string = json.dumps(submission_dicts, indent=4)
 print(response_string)
 
-labels =  {'x': 'Aritcles', 'y': 'Comments'}
-fig = px.bar(x=submission_comment_counts, y=submission_links, labels=labels)
+labels =  {'y': 'Comments', 'x': 'Aritcles'}
+fig = px.bar(y=submission_comment_counts, x=submission_links, labels=labels)
+# fig = px.pie(y=submission_comment_counts, x=submission_links, labels=labels)
+df = px.data.tips()
+fig = px.pie(df, values=submission_comment_counts, names=submission_links)
 # fig.update_layout()
 fig.show()
